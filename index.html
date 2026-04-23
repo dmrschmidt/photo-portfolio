@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt</title>
 <meta name="description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
 
@@ -79,16 +79,10 @@
 
 </style>
 
-<!-- Plain CSS outside the Tailwind CDN block so env(safe-area-inset-*) rules
-     are always applied verbatim by the browser. -->
+<!-- Plain CSS outside the Tailwind CDN block so these rules always apply. -->
 <style>
-  /* Top bar extends into the iOS safe area so the blur sits under the notch. */
-  #topbar {
-    padding-top: env(safe-area-inset-top) !important;
-    padding-left: env(safe-area-inset-left) !important;
-    padding-right: env(safe-area-inset-right) !important;
-    border-bottom: 1px solid transparent;
-  }
+  /* Top bar: blur sits on the fixed element when the page is scrolled. */
+  #topbar { border-bottom: 1px solid transparent; }
   .topbar-inner { padding: 1.25rem 1.5rem !important; }
   @media (min-width: 768px) {
     .topbar-inner { padding: 1.25rem 2.5rem !important; }
@@ -101,27 +95,15 @@
     box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6);
   }
 
-  /* Modal: safe-area aware padding, scroll tall content, keep close pinned. */
+  /* Modal: scroll tall content, keep close button pinned to the viewport. */
   #modal {
-    padding-top: calc(1.5rem + env(safe-area-inset-top)) !important;
-    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
-    padding-left: calc(1.5rem + env(safe-area-inset-left)) !important;
-    padding-right: calc(1.5rem + env(safe-area-inset-right)) !important;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
-  @media (min-width: 768px) {
-    #modal {
-      padding-top: calc(3rem + env(safe-area-inset-top)) !important;
-      padding-bottom: calc(3rem + env(safe-area-inset-bottom)) !important;
-      padding-left: calc(3rem + env(safe-area-inset-left)) !important;
-      padding-right: calc(3rem + env(safe-area-inset-right)) !important;
-    }
-  }
   #modalClose {
     position: fixed;
-    top: calc(1rem + env(safe-area-inset-top));
-    right: calc(1rem + env(safe-area-inset-right));
+    top: 1rem;
+    right: 1rem;
     z-index: 1;
   }
 </style>
