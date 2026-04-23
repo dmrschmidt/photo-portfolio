@@ -81,16 +81,30 @@
 
 <!-- Plain CSS outside the Tailwind CDN block so these rules always apply. -->
 <style>
-  /* Reserve a dark strip at the top so the iOS status bar never overlays the
-     photos. env(safe-area-inset-top) handles notched iPhones; the 20px floor
-     covers non-notched iPhones and iPads where env() resolves to 0. */
+  /* --status-bar-h: notch height on iOS, with a 20px floor for non-notched
+     devices where env() resolves to 0. */
   :root { --status-bar-h: max(env(safe-area-inset-top), 20px); }
   html, body { background-color: #0b0b0a !important; }
-  body { padding-top: var(--status-bar-h) !important; }
 
-  /* Top bar sits at y=0 and pads its contents below the status bar. When the
-     page is scrolled, its blur covers the full strip, including the status
-     bar region, so everything reads as one dark surface. */
+  /* A solid dark bar pinned over the iOS status bar / notch region, sitting
+     above every other layer (topbar z=50, grain z=60, modal z=70). Whatever
+     scrolls past underneath, the translucent iOS status bar always sits on a
+     clean dark backdrop. */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--status-bar-h);
+    background-color: #0b0b0a;
+    z-index: 80;
+    pointer-events: none;
+  }
+
+  /* Top bar content sits below the reserved strip. The bar itself still
+     reaches y=0 so its scrolled blur extends under the strip, though the
+     strip is opaque and covers it visually. */
   #topbar {
     padding-top: var(--status-bar-h) !important;
     border-bottom: 1px solid transparent;
@@ -120,7 +134,7 @@
     position: fixed;
     top: calc(0.75rem + var(--status-bar-h));
     right: 1rem;
-    z-index: 1;
+    z-index: 81;
   }
 </style>
 </head>
