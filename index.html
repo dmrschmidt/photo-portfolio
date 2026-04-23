@@ -79,14 +79,15 @@
 
   /* top bar absorbs the iOS safe area so the blur sits under the notch too */
   .topbar-inner {
-    padding-top: calc(1.25rem + env(safe-area-inset-top));
-    padding-left: calc(1.5rem + env(safe-area-inset-left));
-    padding-right: calc(1.5rem + env(safe-area-inset-right));
+    padding-top: calc(1.25rem + env(safe-area-inset-top)) !important;
+    padding-bottom: 1.25rem !important;
+    padding-left: calc(1.5rem + env(safe-area-inset-left)) !important;
+    padding-right: calc(1.5rem + env(safe-area-inset-right)) !important;
   }
   @media (min-width: 768px) {
     .topbar-inner {
-      padding-left: calc(2.5rem + env(safe-area-inset-left));
-      padding-right: calc(2.5rem + env(safe-area-inset-right));
+      padding-left: calc(2.5rem + env(safe-area-inset-left)) !important;
+      padding-right: calc(2.5rem + env(safe-area-inset-right)) !important;
     }
   }
 
@@ -105,7 +106,7 @@
 
 <!-- top bar -->
 <header id="topbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
-  <div class="topbar-inner flex items-center justify-between px-6 md:px-10 py-5 border-b border-transparent transition-colors duration-500">
+  <div class="topbar-inner flex items-center justify-between border-b border-transparent transition-colors duration-500">
     <a href="#" class="mono text-[11px] uppercase tracking-[0.28em] text-bone">
       <span class="inline-block w-2 h-2 rounded-full bg-rust align-middle mr-2"></span>
       Schmidt <span class="text-mute">/</span> Éditions
