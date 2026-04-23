@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0b0b0a" />
 <title>Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt</title>
 <meta name="description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
@@ -82,16 +82,22 @@
 
 <!-- Plain CSS outside the Tailwind CDN block so these rules always apply. -->
 <style>
-  /* Top bar: blur the strip when the page is scrolled. */
-  #topbar { border-bottom: 1px solid transparent; }
+  :root { --sat: env(safe-area-inset-top, 0px); }
+
+  /* Top bar pads its content below the notch and keeps a blurred backdrop at
+     all times, so the safe-area strip is always covered. */
+  #topbar {
+    padding-top: var(--sat) !important;
+    background-color: rgba(11, 11, 10, 0.75);
+    backdrop-filter: saturate(140%) blur(20px);
+    -webkit-backdrop-filter: saturate(140%) blur(20px);
+    border-bottom: 1px solid transparent;
+  }
   .topbar-inner { padding: 1.25rem 1.5rem !important; }
   @media (min-width: 768px) {
     .topbar-inner { padding: 1.25rem 2.5rem !important; }
   }
   #topbar.is-scrolled {
-    background-color: rgba(11, 11, 10, 0.72);
-    backdrop-filter: saturate(140%) blur(16px);
-    -webkit-backdrop-filter: saturate(140%) blur(16px);
     border-bottom-color: #1e1d1b;
     box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6);
   }
@@ -100,10 +106,14 @@
   #modal {
     overflow-y: auto;
     overscroll-behavior: contain;
+    padding-top: calc(1.5rem + var(--sat)) !important;
+  }
+  @media (min-width: 768px) {
+    #modal { padding-top: calc(3rem + var(--sat)) !important; }
   }
   #modalClose {
     position: fixed;
-    top: 1rem;
+    top: calc(0.75rem + var(--sat));
     right: 1rem;
     z-index: 1;
   }
