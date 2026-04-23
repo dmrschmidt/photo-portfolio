@@ -77,27 +77,48 @@
   /* subtle vignette */
   .vignette { background: radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(0,0,0,0.55) 100%); }
 
-  /* top bar absorbs the iOS safe area so the blur sits under the notch too */
-  .topbar-inner {
-    padding-top: calc(1.25rem + env(safe-area-inset-top)) !important;
-    padding-bottom: 1.25rem !important;
-    padding-left: calc(1.5rem + env(safe-area-inset-left)) !important;
-    padding-right: calc(1.5rem + env(safe-area-inset-right)) !important;
+  /* top bar: blur lives on the fixed element itself so it covers the iOS safe area */
+  #topbar {
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    border-bottom: 1px solid transparent;
   }
+  .topbar-inner { padding: 1.25rem 1.5rem; }
   @media (min-width: 768px) {
-    .topbar-inner {
-      padding-left: calc(2.5rem + env(safe-area-inset-left)) !important;
-      padding-right: calc(2.5rem + env(safe-area-inset-right)) !important;
-    }
+    .topbar-inner { padding: 1.25rem 2.5rem; }
   }
 
-  /* glass top bar when scrolled */
-  #topbar.is-scrolled > .topbar-inner {
+  #topbar.is-scrolled {
     background: rgba(11, 11, 10, 0.55);
     backdrop-filter: saturate(140%) blur(16px);
     -webkit-backdrop-filter: saturate(140%) blur(16px);
     border-bottom-color: var(--color-hair);
     box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6);
+  }
+
+  /* modal: keep close button in the safe area and let tall photos scroll */
+  #modal {
+    padding-top: calc(1.5rem + env(safe-area-inset-top));
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    padding-left: calc(1.5rem + env(safe-area-inset-left));
+    padding-right: calc(1.5rem + env(safe-area-inset-right));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  @media (min-width: 768px) {
+    #modal {
+      padding-top: calc(3rem + env(safe-area-inset-top));
+      padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+      padding-left: calc(3rem + env(safe-area-inset-left));
+      padding-right: calc(3rem + env(safe-area-inset-right));
+    }
+  }
+  #modalClose {
+    position: fixed;
+    top: calc(1rem + env(safe-area-inset-top));
+    right: calc(1rem + env(safe-area-inset-right));
+    z-index: 1;
   }
 </style>
 </head>
@@ -463,14 +484,14 @@
 </footer>
 
 <!-- MODAL -->
-<div id="modal" class="fixed inset-0 z-[70] modal-bg hidden items-center justify-center p-6 md:p-12">
+<div id="modal" class="fixed inset-0 z-[70] modal-bg hidden items-start md:items-center justify-center">
   <button id="modalClose" aria-label="Close"
-    class="absolute top-6 right-6 mono text-[11px] uppercase tracking-[0.28em] text-bone-dim hover:text-bone">
+    class="mono text-[11px] uppercase tracking-[0.28em] text-bone-dim hover:text-bone">
     Close <span class="ml-2">✕</span>
   </button>
-  <div class="max-w-6xl w-full grid grid-cols-12 gap-8 items-center">
+  <div class="max-w-6xl w-full grid grid-cols-12 gap-8 items-center my-auto">
     <figure class="col-span-12 md:col-span-8 img-frame">
-      <img id="mImg" src="" alt="" class="w-full max-h-[78vh] object-contain" />
+      <img id="mImg" src="" alt="" class="w-full max-h-[70vh] md:max-h-[78vh] object-contain" />
     </figure>
     <div class="col-span-12 md:col-span-4 space-y-5">
       <div class="mono text-[10px] uppercase tracking-[0.3em] text-mute">Plate <span id="mPlate"></span> · <span id="mYear"></span></div>
