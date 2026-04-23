@@ -77,41 +77,45 @@
   /* subtle vignette */
   .vignette { background: radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(0,0,0,0.55) 100%); }
 
-  /* top bar: blur lives on the fixed element itself so it covers the iOS safe area */
+</style>
+
+<!-- Plain CSS outside the Tailwind CDN block so env(safe-area-inset-*) rules
+     are always applied verbatim by the browser. -->
+<style>
+  /* Top bar extends into the iOS safe area so the blur sits under the notch. */
   #topbar {
-    padding-top: env(safe-area-inset-top);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top) !important;
+    padding-left: env(safe-area-inset-left) !important;
+    padding-right: env(safe-area-inset-right) !important;
     border-bottom: 1px solid transparent;
   }
-  .topbar-inner { padding: 1.25rem 1.5rem; }
+  .topbar-inner { padding: 1.25rem 1.5rem !important; }
   @media (min-width: 768px) {
-    .topbar-inner { padding: 1.25rem 2.5rem; }
+    .topbar-inner { padding: 1.25rem 2.5rem !important; }
   }
-
   #topbar.is-scrolled {
-    background: rgba(11, 11, 10, 0.55);
+    background-color: rgba(11, 11, 10, 0.72);
     backdrop-filter: saturate(140%) blur(16px);
     -webkit-backdrop-filter: saturate(140%) blur(16px);
-    border-bottom-color: var(--color-hair);
+    border-bottom-color: #1e1d1b;
     box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6);
   }
 
-  /* modal: keep close button in the safe area and let tall photos scroll */
+  /* Modal: safe-area aware padding, scroll tall content, keep close pinned. */
   #modal {
-    padding-top: calc(1.5rem + env(safe-area-inset-top));
-    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
-    padding-left: calc(1.5rem + env(safe-area-inset-left));
-    padding-right: calc(1.5rem + env(safe-area-inset-right));
+    padding-top: calc(1.5rem + env(safe-area-inset-top)) !important;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)) !important;
+    padding-left: calc(1.5rem + env(safe-area-inset-left)) !important;
+    padding-right: calc(1.5rem + env(safe-area-inset-right)) !important;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
   @media (min-width: 768px) {
     #modal {
-      padding-top: calc(3rem + env(safe-area-inset-top));
-      padding-bottom: calc(3rem + env(safe-area-inset-bottom));
-      padding-left: calc(3rem + env(safe-area-inset-left));
-      padding-right: calc(3rem + env(safe-area-inset-right));
+      padding-top: calc(3rem + env(safe-area-inset-top)) !important;
+      padding-bottom: calc(3rem + env(safe-area-inset-bottom)) !important;
+      padding-left: calc(3rem + env(safe-area-inset-left)) !important;
+      padding-right: calc(3rem + env(safe-area-inset-right)) !important;
     }
   }
   #modalClose {
