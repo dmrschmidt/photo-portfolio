@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt</title>
 <meta name="description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
 
@@ -81,34 +81,8 @@
 
 <!-- Plain CSS outside the Tailwind CDN block so these rules always apply. -->
 <style>
-  /* --status-bar-h: notch height on iOS, with a 20px floor for non-notched
-     devices where env() resolves to 0. */
-  :root { --status-bar-h: max(env(safe-area-inset-top), 20px); }
-  html, body { background-color: #0b0b0a !important; }
-
-  /* A solid dark bar pinned over the iOS status bar / notch region, sitting
-     above every other layer (topbar z=50, grain z=60, modal z=70). Whatever
-     scrolls past underneath, the translucent iOS status bar always sits on a
-     clean dark backdrop. */
-  body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--status-bar-h);
-    background-color: #0b0b0a;
-    z-index: 80;
-    pointer-events: none;
-  }
-
-  /* Top bar content sits below the reserved strip. The bar itself still
-     reaches y=0 so its scrolled blur extends under the strip, though the
-     strip is opaque and covers it visually. */
-  #topbar {
-    padding-top: var(--status-bar-h) !important;
-    border-bottom: 1px solid transparent;
-  }
+  /* Top bar: blur the strip when the page is scrolled. */
+  #topbar { border-bottom: 1px solid transparent; }
   .topbar-inner { padding: 1.25rem 1.5rem !important; }
   @media (min-width: 768px) {
     .topbar-inner { padding: 1.25rem 2.5rem !important; }
@@ -125,16 +99,12 @@
   #modal {
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding-top: calc(1.5rem + var(--status-bar-h)) !important;
-  }
-  @media (min-width: 768px) {
-    #modal { padding-top: calc(3rem + var(--status-bar-h)) !important; }
   }
   #modalClose {
     position: fixed;
-    top: calc(0.75rem + var(--status-bar-h));
+    top: 1rem;
     right: 1rem;
-    z-index: 81;
+    z-index: 1;
   }
 </style>
 </head>
