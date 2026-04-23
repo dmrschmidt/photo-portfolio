@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt</title>
 <meta name="description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
 
@@ -77,8 +77,21 @@
   /* subtle vignette */
   .vignette { background: radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(0,0,0,0.55) 100%); }
 
+  /* top bar absorbs the iOS safe area so the blur sits under the notch too */
+  .topbar-inner {
+    padding-top: calc(1.25rem + env(safe-area-inset-top));
+    padding-left: calc(1.5rem + env(safe-area-inset-left));
+    padding-right: calc(1.5rem + env(safe-area-inset-right));
+  }
+  @media (min-width: 768px) {
+    .topbar-inner {
+      padding-left: calc(2.5rem + env(safe-area-inset-left));
+      padding-right: calc(2.5rem + env(safe-area-inset-right));
+    }
+  }
+
   /* glass top bar when scrolled */
-  #topbar.is-scrolled > div {
+  #topbar.is-scrolled > .topbar-inner {
     background: rgba(11, 11, 10, 0.55);
     backdrop-filter: saturate(140%) blur(16px);
     -webkit-backdrop-filter: saturate(140%) blur(16px);
@@ -92,7 +105,7 @@
 
 <!-- top bar -->
 <header id="topbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
-  <div class="flex items-center justify-between px-6 md:px-10 py-5 border-b border-transparent transition-colors duration-500">
+  <div class="topbar-inner flex items-center justify-between px-6 md:px-10 py-5 border-b border-transparent transition-colors duration-500">
     <a href="#" class="mono text-[11px] uppercase tracking-[0.28em] text-bone">
       <span class="inline-block w-2 h-2 rounded-full bg-rust align-middle mr-2"></span>
       Schmidt <span class="text-mute">/</span> Éditions
