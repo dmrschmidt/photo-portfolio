@@ -81,25 +81,26 @@
 </style>
 
 <!-- Plain CSS outside the Tailwind CDN block so these rules always apply.
-     Per WebKit: with the default viewport-fit=auto, Safari insets content
-     inside the safe area and fills the inset with the <html>/<body>
-     background-color. So the *only* requirement for a clean safe-area strip
-     is a solid html+body background — which the Tailwind CDN block wasn't
-     reliably applying. Setting it here explicitly fixes the leak. -->
+     Safari 26 (Liquid Glass) tints the translucent status bar from the
+     background-color of any position:fixed element at the top of the
+     viewport. If our #topbar is transparent (its old behavior), Safari
+     samples nothing solid and the photos behind bleed through. Giving
+     the bar a solid dark backdrop at all times — not just when scrolled —
+     gives Safari a stable color to tint with and stops the leak. -->
 <style>
   html, body { background-color: #0b0b0a !important; }
 
-  /* Top bar: blur the strip when scrolled. Default insetting keeps content
-     out of the safe area for us. */
-  #topbar { border-bottom: 1px solid transparent; }
+  #topbar {
+    background-color: #0b0b0a;
+    backdrop-filter: saturate(140%) blur(16px);
+    -webkit-backdrop-filter: saturate(140%) blur(16px);
+    border-bottom: 1px solid transparent;
+  }
   .topbar-inner { padding: 1.25rem 1.5rem !important; }
   @media (min-width: 768px) {
     .topbar-inner { padding: 1.25rem 2.5rem !important; }
   }
   #topbar.is-scrolled {
-    background-color: rgba(11, 11, 10, 0.72);
-    backdrop-filter: saturate(140%) blur(16px);
-    -webkit-backdrop-filter: saturate(140%) blur(16px);
     border-bottom-color: #1e1d1b;
     box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6);
   }
