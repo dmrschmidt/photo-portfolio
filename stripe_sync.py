@@ -245,13 +245,15 @@ def parse_pieces(html: str) -> list[dict]:
     return pieces
 
 
-def inject_stripe_url(html: str, plate: str, url: str) -> str:
-    """Insert or replace a data-stripe-url attribute on the article tag for
-    the given plate."""
+def inject_stripe_url(html: str, plate: str, url: str | None) -> str:
+    """Insert, replace, or remove a data-stripe-url attribute on the
+    article tag for the given plate. Passing url=None strips it."""
     def repl(m: re.Match) -> str:
         tag = m.group(0)
         if 'data-plate="' + plate + '"' not in tag:
             return tag
+        if url is None:
+            return re.sub(r'\s*data-stripe-url="[^"]*"', "", tag)
         if "data-stripe-url=" in tag:
             return re.sub(r'data-stripe-url="[^"]*"', f'data-stripe-url="{url}"', tag)
         return tag[:-1] + f' data-stripe-url="{url}">'
@@ -291,40 +293,75 @@ def main() -> int:
 
     state: dict = json.loads(STATE_FILE.read_text()) if STATE_FILE.exists() else {}
 
+    def save() -> None:
+        STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False))
+
     for p in pieces:
         key = p["img"]
         label = f"Pl. {p['plate']:>4} — {p['title']}"
-
-        if p["remaining"] <= 0:
-            print(f"  skip  {label} — sold out")
-            continue
-
-        existing = state.get(key)
-        if (existing
-                and existing.get("title") == p["title"]
-                and existing.get("price_eur") == p["price_eur"]
-                and existing.get("product_id")):
-            # Back-fill the image onto already-synced products that predate
-            # the image-upload feature.
-            if not existing.get("image_url"):
-                print(f"  image {label} — attaching photo to existing product …")
-                image_url = ensure_image_url(secret, state, p["img"])
-                if image_url:
-                    stripe_post(secret, f"products/{existing['product_id']}", {
-                        "images": [image_url],
-                    })
-                    print(f"        ✓ product updated with image")
-            else:
-                print(f"  keep  {label} — {existing['url']}")
-            continue
-
+        existing = state.get(key) or {}
         description = DESCRIPTIONS.get(key, p["desc"])[:5000]
-        print(f"  sync  {label} …")
 
+        # Plate is sold out ──────────────────────────────────────────────
+        if p["remaining"] <= 0:
+            if existing.get("payment_link_id") and existing.get("status") != "sold_out":
+                print(f"  close {label} — deactivating price + payment link")
+                stripe_post(secret, f"payment_links/{existing['payment_link_id']}", {"active": "false"})
+                if existing.get("price_id"):
+                    stripe_post(secret, f"prices/{existing['price_id']}", {"active": "false"})
+                existing["status"] = "sold_out"
+                existing.pop("url", None)
+                state[key] = existing
+                save()
+            else:
+                print(f"  skip  {label} — sold out")
+            continue
+
+        # Plate is available ─────────────────────────────────────────────
         image_url = ensure_image_url(secret, state, p["img"])
+        product_name = f"Pl. {p['plate']} — {p['title']}"
 
-        product_params: dict = {
-            "name": f"Pl. {p['plate']} — {p['title']}",
+        # Fresh: no product yet in the ledger.
+        if not existing.get("product_id"):
+            print(f"  new   {label} …")
+            product_params: dict = {
+                "name": product_name,
+                "description": description,
+                "metadata": {
+                    "plate": p["plate"],
+                    "image": p["img"],
+                    "year": p["year"],
+                    "edition_size": str(p["edition"]),
+                },
+            }
+            if image_url:
+                product_params["images"] = [image_url]
+            product = stripe_post(secret, "products", product_params)
+            price = stripe_post(secret, "prices", {
+                "product": product["id"],
+                "unit_amount": p["price_eur"] * 100,
+                "currency": "eur",
+            })
+            link = stripe_post(secret, "payment_links", {
+                "line_items": [{"price": price["id"], "quantity": 1}],
+            })
+            state[key] = {**existing,
+                "plate": p["plate"],
+                "title": p["title"],
+                "price_eur": p["price_eur"],
+                "product_id": product["id"],
+                "price_id": price["id"],
+                "payment_link_id": link["id"],
+                "url": link["url"],
+                "status": "active",
+            }
+            save()
+            print(f"        → {link['url']}")
+            continue
+
+        # Already exists — patch product (name/desc/images are mutable).
+        product_patch: dict = {
+            "name": product_name,
             "description": description,
             "metadata": {
                 "plate": p["plate"],
@@ -334,37 +371,56 @@ def main() -> int:
             },
         }
         if image_url:
-            product_params["images"] = [image_url]
-        product = stripe_post(secret, "products", product_params)
+            product_patch["images"] = [image_url]
+        stripe_post(secret, f"products/{existing['product_id']}", product_patch)
+
+        # Price unchanged → nothing further to create.
+        if existing.get("price_eur") == p["price_eur"] and existing.get("status") == "active":
+            print(f"  keep  {label} — {existing.get('url', '?')}")
+            existing.update(title=p["title"])
+            state[key] = existing
+            save()
+            continue
+
+        # Price changed (or plate is being re-opened) → rotate price + link.
+        if existing.get("price_eur") != p["price_eur"]:
+            print(f"  repr. {label} — €{existing.get('price_eur')} → €{p['price_eur']}")
+        else:
+            print(f"  reopen {label}")
+
+        if existing.get("payment_link_id"):
+            stripe_post(secret, f"payment_links/{existing['payment_link_id']}", {"active": "false"})
+        if existing.get("price_id"):
+            stripe_post(secret, f"prices/{existing['price_id']}", {"active": "false"})
         price = stripe_post(secret, "prices", {
-            "product": product["id"],
+            "product": existing["product_id"],
             "unit_amount": p["price_eur"] * 100,
             "currency": "eur",
         })
         link = stripe_post(secret, "payment_links", {
             "line_items": [{"price": price["id"], "quantity": 1}],
         })
-
-        state[key] = {
-            "plate": p["plate"],
-            "title": p["title"],
-            "price_eur": p["price_eur"],
-            "product_id": product["id"],
-            "price_id": price["id"],
-            "payment_link_id": link["id"],
-            "url": link["url"],
-        }
-        # Persist after every successful sync so partial runs are safe.
-        STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False))
+        existing.update(
+            title=p["title"],
+            price_eur=p["price_eur"],
+            price_id=price["id"],
+            payment_link_id=link["id"],
+            url=link["url"],
+            status="active",
+        )
+        state[key] = existing
+        save()
         print(f"        → {link['url']}")
 
     # Rewrite index.html with data-stripe-url attrs.
     updated = html
     for p in pieces:
         entry = state.get(p["img"])
-        if not entry:
-            continue
-        updated = inject_stripe_url(updated, p["plate"], entry["url"])
+        # Strip URL for sold-out plates (falls back to mailto enquiry).
+        if p["remaining"] <= 0 or not entry or not entry.get("url"):
+            updated = inject_stripe_url(updated, p["plate"], None)
+        else:
+            updated = inject_stripe_url(updated, p["plate"], entry["url"])
 
     if updated != html:
         HTML_FILE.write_text(updated, encoding="utf-8")
