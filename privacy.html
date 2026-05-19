@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0b0b0a" />
+<title>Privacy — Schmidt / Éditions</title>
+<meta name="description" content="Privacy policy for editions.dmrschmidt.de. What data is collected, why, by whom, and the rights of visitors and buyers." />
+<link rel="canonical" href="https://editions.dmrschmidt.de/privacy.html" />
+<meta name="robots" content="index,follow" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0a'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23c44a2f'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link href="https://fonts.bunny.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+<style type="text/tailwindcss">
+  @theme {
+    --color-ink: #0b0b0a;
+    --color-ink-2: #121210;
+    --color-bone: #e8e2d3;
+    --color-bone-dim: #c8c2b3;
+    --color-mute: #7a746a;
+    --color-hair: #1e1d1b;
+    --color-rust: #c44a2f;
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  html, body { background: var(--color-ink); color: var(--color-bone); }
+  body { font-family: var(--font-display); -webkit-font-smoothing: antialiased; }
+  .mono { font-family: var(--font-mono); letter-spacing: 0.02em; }
+  .display { font-family: var(--font-display); font-variation-settings: "opsz" 144; }
+  .hairline { border-color: var(--color-hair); }
+  .grain::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0 0.04  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
+    mix-blend-mode: overlay; opacity: 0.35;
+  }
+</style>
+
+<style>
+  html, body { background-color: #0b0b0a !important; }
+  #topbar { background-color: #0b0b0a; backdrop-filter: saturate(140%) blur(16px); -webkit-backdrop-filter: saturate(140%) blur(16px); border-bottom: 1px solid transparent; }
+  .topbar-inner { padding: 1.25rem 1.5rem !important; }
+  @media (min-width: 768px) { .topbar-inner { padding: 1.25rem 2.5rem !important; } }
+  #topbar.is-scrolled { border-bottom-color: #1e1d1b; box-shadow: 0 1px 0 rgba(232, 226, 211, 0.04), 0 20px 40px -30px rgba(0,0,0,0.6); }
+  .prose h2 { font-family: var(--font-display); font-weight: 300; font-size: 1.6rem; line-height: 1.15; margin-top: 3rem; margin-bottom: 1rem; color: var(--color-bone); }
+  .prose h2 .sec { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--color-mute); display: block; margin-bottom: 0.5rem; }
+  .prose p { color: var(--color-bone-dim); line-height: 1.7; margin-bottom: 1rem; font-size: 1rem; }
+  .prose ul { color: var(--color-bone-dim); line-height: 1.7; margin-bottom: 1rem; padding-left: 1.25rem; list-style: disc; }
+  .prose ul li { margin-bottom: 0.35rem; }
+  .prose a { color: var(--color-bone); text-decoration: underline; text-decoration-color: var(--color-mute); }
+  .prose a:hover { text-decoration-color: var(--color-bone); }
+  .prose .stack {
+    border-left: 1px solid var(--color-hair);
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .prose .stack p { margin-bottom: 0.5rem; }
+  .prose .stack .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+    margin-bottom: 0.35rem;
+    display: block;
+  }
+</style>
+</head>
+
+<body class="grain min-h-screen selection:bg-bone selection:text-ink">
+
+<header id="topbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+  <div class="topbar-inner flex items-center justify-between border-b border-transparent transition-colors duration-500">
+    <a href="index.html" class="mono text-[11px] uppercase tracking-[0.28em] text-bone">
+      <span class="inline-block w-2 h-2 rounded-full bg-rust align-middle mr-2"></span>
+      Schmidt <span class="text-mute">/</span> Éditions
+    </a>
+    <nav class="mono text-[11px] uppercase tracking-[0.28em] flex gap-7 text-bone-dim">
+      <a href="index.html#works" class="hover:text-bone transition">Works</a>
+      <a href="index.html#about" class="hover:text-bone transition">Atelier</a>
+      <a href="journal.html" class="hover:text-bone transition">Journal</a>
+      <a href="index.html#enquire" class="hover:text-bone transition">Enquire</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-40 md:pt-48 pb-24 md:pb-32 px-6 md:px-10">
+  <div class="grid grid-cols-12 gap-6 md:gap-10">
+    <div class="col-span-12 md:col-span-8 md:col-start-3">
+
+      <div class="mono text-[10px] uppercase tracking-[0.34em] text-mute mb-6">§ VIII — Privacy</div>
+      <h1 class="display text-5xl md:text-7xl font-light leading-[0.95] tracking-[-0.02em]">
+        Privacy<br/>
+        <span class="italic text-bone-dim">policy.</span>
+      </h1>
+      <p class="mono text-[10px] uppercase tracking-[0.28em] text-mute mt-6">
+        Last revised · MMXXVI · February · Applies to editions.dmrschmidt.de
+      </p>
+
+      <div class="prose mt-12">
+
+        <h2><span class="sec">§ 1</span>Controller</h2>
+        <p>The controller responsible for the processing of personal data on this site within the meaning of the General Data Protection Regulation (Regulation (EU) 2016/679, "GDPR") is Dennis Schmidt. Postal address, telephone, and authorised representative are listed in the <a href="https://dmrschmidt.de/imprint.html" target="_blank" rel="noopener">imprint</a>. Data-related correspondence is handled at <a href="mailto:contact@dmrschmidt.de">contact@dmrschmidt.de</a>.</p>
+
+        <h2><span class="sec">§ 2</span>Scope</h2>
+        <p>This policy describes how <span class="mono">editions.dmrschmidt.de</span> processes data when a visitor browses the catalogue, views a plate, or initiates a purchase via the linked Stripe Checkout page. The site does not set first-party cookies, does not use analytics, and does not embed advertising or social trackers.</p>
+
+        <h2><span class="sec">§ 3</span>What is collected, and on what legal basis</h2>
+        <p>The site is delivered as static HTML; no account is created and no form data is collected here directly. The categories below are the only ones touched in connection with this site:</p>
+        <ul>
+          <li><strong>Server access logs.</strong> When a page is requested, the hosting infrastructure receives the technical request data (IP address, requested path, timestamp, referrer, user-agent string). This is necessary to deliver the page and is processed under Art. 6(1)(f) GDPR (legitimate interest in operating and securing the site). Logs are retained for no longer than necessary and are not used to profile visitors.</li>
+          <li><strong>Email correspondence.</strong> When a visitor writes to <span class="mono">contact@dmrschmidt.de</span>, the message and contact details are processed on the basis of Art. 6(1)(b) GDPR (steps prior to entering into a contract) or Art. 6(1)(f) GDPR (legitimate interest in responding to enquiries), and retained as long as the matter requires.</li>
+          <li><strong>Purchase data.</strong> A purchase is initiated by clicking "Acquire" on a plate, which redirects to Stripe Checkout. From that point, the data the buyer enters (name, billing and shipping address, payment data) is collected by Stripe; the atelier receives a fulfilment record (name, shipping address, plate, price, transaction reference) on the legal basis of Art. 6(1)(b) GDPR (performance of the sales contract). Payment-card data is never processed by or stored on this site.</li>
+        </ul>
+
+        <h2><span class="sec">§ 4</span>Third parties involved in delivering the site</h2>
+        <p>The site relies on three categories of external service. Each is named below, together with the data it receives and the legal basis under Art. 6(1)(f) GDPR (legitimate interest in delivering a fast, typographically consistent, payment-enabled site).</p>
+
+        <div class="stack">
+          <span class="label">Hosting / log files</span>
+          <p>The site is served as a static page from <em>[hosting provider — please confirm and replace this placeholder]</em>. The hoster processes the access logs described in §3 on the atelier's behalf as a data processor within the meaning of Art. 28 GDPR; a data-processing agreement is in place.</p>
+        </div>
+
+        <div class="stack">
+          <span class="label">Fonts — Bunny Fonts (BunnyWay d.o.o., Slovenia)</span>
+          <p>The display and monospace typefaces are loaded from Bunny Fonts, an EU-based mirror of the Google Fonts catalogue operated by BunnyWay d.o.o., Cesta komandanta Staneta 4A, 1215 Medvode, Slovenia. Bunny Fonts does not set cookies and, per its public commitment, does not log IP addresses for the purpose of profiling. Data leaves the visitor's browser solely to retrieve the CSS and font files. Bunny's privacy notice is available at <a href="https://bunny.net/privacy" target="_blank" rel="noopener">bunny.net/privacy</a>.</p>
+        </div>
+
+        <div class="stack">
+          <span class="label">CSS framework — jsDelivr (Prospect One, Poland)</span>
+          <p>The Tailwind CSS runtime is loaded from the jsDelivr public CDN, operated by Prospect One sp. z o.o., Krakow, Poland, with edge nodes in the EU and elsewhere. The CDN receives the request data described in §3 in order to serve the script. jsDelivr's privacy notice is available at <a href="https://www.jsdelivr.com/privacy-policy-jsdelivr-net" target="_blank" rel="noopener">jsdelivr.com/privacy-policy-jsdelivr-net</a>. The atelier intends to replace this runtime with a self-hosted, pre-built stylesheet; this section will be removed once the swap is in place.</p>
+        </div>
+
+        <div class="stack">
+          <span class="label">Payment — Stripe Payments Europe, Ltd. (Ireland)</span>
+          <p>Acquisition links from individual plates redirect to <span class="mono">checkout.stripe.com</span>, operated by Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Ireland. Stripe is the controller of the payment data processed there. The data the buyer enters in Checkout (name, billing and shipping address, payment instrument data) is collected by Stripe under its own privacy policy at <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>; the atelier receives only the fulfilment record described in §3. No Stripe scripts, cookies, or fingerprinting tools run on <span class="mono">editions.dmrschmidt.de</span> itself — they activate only after the redirect.</p>
+        </div>
+
+        <h2><span class="sec">§ 5</span>International transfers</h2>
+        <p>The services named in §4 operate from EU member states (Slovenia, Poland, Ireland). Stripe may transfer payment data to its parent company in the United States; such transfers are covered by the EU–US Data Privacy Framework adequacy decision of 10 July 2023 and by Stripe's Standard Contractual Clauses. jsDelivr edge nodes outside the EEA are bound by SCCs. Bunny Fonts requests are served from EU infrastructure.</p>
+
+        <h2><span class="sec">§ 6</span>Cookies and tracking</h2>
+        <p>This site sets no cookies and runs no analytics, advertising or social-tracking scripts. No consent banner is therefore presented. Should this change in the future, this policy will be updated and explicit consent will be obtained where the law requires it.</p>
+
+        <h2><span class="sec">§ 7</span>Your rights</h2>
+        <p>Subject to the conditions set out in the GDPR, you have the following rights with respect to data we process about you:</p>
+        <ul>
+          <li>Right of access (Art. 15 GDPR);</li>
+          <li>Right to rectification (Art. 16);</li>
+          <li>Right to erasure (Art. 17);</li>
+          <li>Right to restriction of processing (Art. 18);</li>
+          <li>Right to data portability (Art. 20);</li>
+          <li>Right to object to processing carried out under Art. 6(1)(f) (Art. 21);</li>
+          <li>Right to withdraw consent at any time where processing is based on consent (Art. 7(3)), without affecting the lawfulness of processing carried out before withdrawal.</li>
+        </ul>
+        <p>To exercise any of these rights, write to <a href="mailto:contact@dmrschmidt.de">contact@dmrschmidt.de</a>. You also have the right to lodge a complaint with a supervisory authority (Art. 77 GDPR). The competent authority for the controller is the Berlin Commissioner for Data Protection and Freedom of Information (<a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener">datenschutz-berlin.de</a>).</p>
+
+        <h2><span class="sec">§ 8</span>Data security</h2>
+        <p>The site is served over HTTPS. Email correspondence is exchanged via the providers chosen by the atelier and the visitor and is, by the nature of email, not end-to-end encrypted by default.</p>
+
+        <h2><span class="sec">§ 9</span>Changes to this policy</h2>
+        <p>This policy applies as of the date shown above. Updates may be made to reflect changes in technology, legal requirements, or the third-party services involved in delivering the site. The version in force is always the one published at this URL.</p>
+
+      </div>
+
+      <div class="mt-16 mono text-[10px] uppercase tracking-[0.28em] text-mute flex gap-6 flex-wrap">
+        <a href="terms.html" class="hover:text-bone">terms of sale</a>
+        <a href="withdrawal.html" class="hover:text-bone">withdrawal</a>
+        <a href="shipping.html" class="hover:text-bone">shipping</a>
+        <a href="index.html" class="hover:text-bone">back to the catalogue →</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="border-t hairline">
+  <div class="px-6 md:px-10 py-10 flex flex-col md:flex-row gap-6 md:items-end md:justify-between">
+    <div>
+      <div class="display italic text-2xl">Schmidt <span class="text-mute">/</span> Éditions</div>
+      <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute mt-2">
+        editions.dmrschmidt.de · © MCMLXXXV — Dennis Schmidt. All impressions reserved.
+      </div>
+    </div>
+    <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute flex flex-wrap gap-x-6 gap-y-2">
+      <a href="https://www.instagram.com/shots.by.dennis/" target="_blank" rel="noopener" class="hover:text-bone">Instagram</a>
+      <a href="journal.html" class="hover:text-bone">Journal</a>
+      <a href="terms.html" class="hover:text-bone">Terms</a>
+      <a href="withdrawal.html" class="hover:text-bone">Withdrawal</a>
+      <a href="shipping.html" class="hover:text-bone">Shipping</a>
+      <a href="https://dmrschmidt.de/imprint.html" target="_blank" rel="noopener" class="hover:text-bone">Imprint</a>
+      <a href="privacy.html" class="text-bone">Privacy</a>
+    </div>
+  </div>
+  <div class="px-6 md:px-10 pb-10 -mt-4">
+    <p class="mono text-[9px] uppercase tracking-[0.22em] text-mute leading-[1.7] max-w-4xl normal-case">
+      Online Dispute Resolution pursuant to Art. 14(1) ODR Regulation: The European Commission provides a platform for online dispute resolution available at
+      <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" class="underline decoration-mute hover:text-bone">ec.europa.eu/consumers/odr</a>.
+      We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.
+    </p>
+  </div>
+</footer>
+
+<script>
+  const topbar = document.getElementById('topbar');
+  const onScroll = () => topbar.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+</body>
+</html>
