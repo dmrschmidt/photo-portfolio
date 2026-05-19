@@ -52,52 +52,54 @@ DESCRIPTIONS = {
         "Plate I · Kolonnade, 16 Uhr. Late afternoon light slipping between "
         "concrete pillars on the west colonnade; a single figure in passage, "
         "an orange bag held against the weight of the architecture. "
-        "Silver gelatin print on matte baryta, framed in oiled oak with "
-        "museum glass. 80 × 100 cm. Hand-numbered and signed. Edition of 7."
+        "Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "53 × 70 cm. Hand-numbered, signed in graphite, shipped flat with a "
+        "letterpress certificate of authenticity. Edition of 7."
     ),
     "photos/DSC07948.jpg": (
         "Plate III · Die Apostel. A quiet congregation, each figure lit from "
         "within by a small square of light. A scene that arrives like a "
         "premonition — devotion, distance, the glow of something we cannot "
-        "yet name. Silver gelatin print on Agfa Record Rapid, unframed. "
-        "40 × 50 cm. Edition of 8."
+        "yet name. Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "70 × 47 cm. Edition of 8."
     ),
     "photos/DSC07952-Edit.jpg": (
         "Plate IV · Das wache Kind. Among the sleeping, a single child "
         "remains awake, pulling the covers over her ears, refusing the "
-        "chorus. Cibachrome, diasec-mounted. 90 × 120 cm. The final "
-        "impression of an edition of three."
+        "chorus. Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "70 × 47 cm. The final impression of an edition of three."
     ),
     "photos/DSCF3006.jpg": (
         "Plate V · Zwei Richtungen. Karl-Marx-Straße at first light: a "
         "traveller stooped over a suitcase, a runner crossing the sunlit "
         "glass of a shuttered storefront. Two bodies, two directions, one "
-        "morning. Silver gelatin print on archival baryta. 30 × 40 cm. "
-        "Edition of 10 — the earliest plate in the catalogue."
+        "morning. Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "70 × 39 cm. Edition of 10 — the earliest plate in the catalogue."
     ),
     "photos/DSCF5688.jpg": (
         "Plate VI · Ausgang. U-Bahnhof Rathaus Neukölln, Ausgang Süd. A "
         "figure at the threshold of the tunnel, a red bag held against the "
-        "weight of daylight. Silver gelatin print on cotton rag, floated in "
-        "black walnut. 50 × 70 cm. Edition of 6."
+        "weight of daylight. Pigment giclée on Hahnemühle Photo Rag Baryta, "
+        "315 gsm. 70 × 47 cm. Edition of 6."
     ),
     "photos/DSCF7696.jpg": (
         "Plate VIII · Gischt. The figure stands steady as the sea arrives "
         "in scattered light around him. A study in salt, patience, and "
-        "held ground. Silver gelatin print on baryta. 40 × 60 cm. "
-        "Edition of 7."
+        "held ground. Pigment giclée on Hahnemühle Photo Rag Baryta, "
+        "315 gsm. 70 × 47 cm. Edition of 7."
     ),
     "photos/DSCF7911.jpg": (
         "Plate IX · Nur / Only. A lone figure crosses above a painted "
         "command: ONLY. A meditation on singular paths, direction, the "
-        "public sentence. Cibachrome. 70 × 90 cm. Diptych with Plate V "
-        "available on private request. Edition of 4."
+        "public sentence. Pigment giclée on Hahnemühle Photo Rag Baryta, "
+        "315 gsm. 47 × 70 cm. Diptych with Plate V available on private "
+        "request. Edition of 4."
     ),
     "photos/DSCF8869.jpg": (
         "Plate X · Überfahrt. A crossing in the morning light; a stranger "
         "meets the lens from among the pressed shoulders of strangers. "
-        "Silver gelatin print. 50 × 60 cm. The closing plate of the "
-        "current cycle. Edition of 5."
+        "Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "70 × 39 cm. The closing plate of the current cycle. Edition of 5."
     ),
 }
 
