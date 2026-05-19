@@ -132,6 +132,7 @@ DESCRIPTIONS = {
 # the rate (or update the country allow-list), change the constants below
 # and re-run — every existing payment link is deactivated and recreated on
 # the next sync, and the new URLs are written back into index.html.
+SOURCE_REPO = "schmidt-editions"
 SHIPPING_RATE = "shr_1TYrViHnIwaKfOGFPX38u8GT"
 
 ALLOWED_COUNTRIES = [
@@ -153,14 +154,17 @@ ALLOWED_COUNTRIES = [
 ]
 
 
-def _payment_link_params(price_id: str) -> dict:
+def _payment_link_params(price_id: str, *, metadata: dict | None = None) -> dict:
     """Parameters for every payment_links create call — pinned to the shipping
     rate and country allow-list above."""
-    return {
+    params: dict = {
         "line_items": [{"price": price_id, "quantity": 1}],
         "shipping_options": [{"shipping_rate": SHIPPING_RATE}],
         "shipping_address_collection": {"allowed_countries": ALLOWED_COUNTRIES},
     }
+    if metadata:
+        params["metadata"] = metadata
+    return params
 
 
 # ──────────────────────── .env + Stripe helpers ──────────────────────────────
@@ -460,7 +464,9 @@ def main() -> int:
                 "unit_amount": p["price_eur"] * 100,
                 "currency": "eur",
             })
-            link = stripe_post(secret, "payment_links", _payment_link_params(price["id"]))
+            link = stripe_post(secret, "payment_links", _payment_link_params(
+                price["id"], metadata={"source_repo": SOURCE_REPO, "plate": p["plate"]},
+            ))
             state[key] = {**existing,
                 "plate": p["plate"],
                 "title": p["title"],
@@ -529,7 +535,9 @@ def main() -> int:
         else:
             price_id = existing["price_id"]
 
-        link = stripe_post(secret, "payment_links", _payment_link_params(price_id))
+        link = stripe_post(secret, "payment_links", _payment_link_params(
+            price_id, metadata={"source_repo": SOURCE_REPO, "plate": p["plate"]},
+        ))
         existing.update(
             title=p["title"],
             price_eur=p["price_eur"],
