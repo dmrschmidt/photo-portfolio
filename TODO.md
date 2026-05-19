@@ -151,7 +151,7 @@ law and credibly premium for collectors. Ordered roughly by impact / risk.
 - [x] **AGB / Terms of Sale page** — full consumer contract terms: scope, conclusion of contract, prices, payment, delivery, passing of risk, retention of title, warranty, jurisdiction, applicable law. Replace the single `<details>` paragraph.
 - [x] **Widerrufsbelehrung + Muster-Widerrufsformular** — the formal cancellation notice text and the standard withdrawal form (HTML or PDF). Mentioning "14 days" is not enough under §312g BGB.
 - [x] **Shipping & delivery page** — lead times by region, carriers, insurance, customs handling for international buyers. Buyer must know shipping cost before clicking through to Stripe.
-- [x] **Privacy coverage** — site now serves its own `privacy.html`, naming Bunny Fonts, jsDelivr, and Stripe specifically. One placeholder remains: the hoster needs to be filled in under §4 once confirmed.
+- [x] **Privacy coverage** — site now serves its own `privacy.html`, naming Render (hoster), Bunny Fonts, jsDelivr, and Stripe specifically.
 - [ ] **Self-host Tailwind build** — replace the in-browser JIT script (loaded from US-based jsdelivr; leaks visitor IP each page view) with a minified static CSS file. Kills the third-country transfer and removes ~50 KB of runtime JS.
 
 ### B.2 Accessibility — BFSG (German Accessibility Act, in force since June 2025)
