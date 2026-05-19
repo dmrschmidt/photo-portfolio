@@ -20,6 +20,7 @@ import os
 import re
 import ssl
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -92,7 +93,36 @@ DESCRIPTIONS = {
         "Plate IX · Überfahrt. A crossing in the morning light; a stranger "
         "meets the lens from among the pressed shoulders of strangers. "
         "Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
-        "70 × 39 cm. The closing plate of the current cycle. Edition of 5."
+        "70 × 39 cm. Edition of 5."
+    ),
+    "photos/R0001706.jpg": (
+        "Plate X · Hinter Glas. A late-evening window in Neukölln; "
+        "condensation between two conversations, lamplight bleeding through "
+        "the glass. Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "53 × 70 cm. Edition of 7."
+    ),
+    "photos/DSC08417.jpg": (
+        "Plate XI · Arkaden. A figure crossing the cloister, golden stone "
+        "holding the last hour of light. Pigment giclée on Hahnemühle Photo "
+        "Rag Baryta, 315 gsm. 47 × 70 cm. Edition of 7."
+    ),
+    "photos/DSCF9068.jpg": (
+        "Plate XII · Vorbeigang. A figure in mid-stride against the long "
+        "shadow of a classical façade; one of those afternoons when the city "
+        "seems to step aside. Pigment giclée on Hahnemühle Photo Rag Baryta, "
+        "315 gsm. 70 × 47 cm. Edition of 7."
+    ),
+    "photos/IMG_4217.jpg": (
+        "Plate XIII · Fernsicht. A Berlin window in the rain; the "
+        "Fernsehturm held just barely in the haze, a figure held just barely "
+        "in the room. Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "52 × 70 cm. Edition of 7."
+    ),
+    "photos/IMG_8674.JPG": (
+        "Plate XIV · Sonnenseite. A figure passing between two cars, the "
+        "orange wall behind holding the last of the day. The closing plate of "
+        "the current cycle. Pigment giclée on Hahnemühle Photo Rag Baryta, "
+        "315 gsm. 53 × 70 cm. Edition of 7."
     ),
 }
 
@@ -151,6 +181,52 @@ def stripe_post(secret: str, path: str, params: dict, *, host: str = "api.stripe
         raise
 
 
+def downscale_for_stripe(src: Path, max_bytes: int = 480_000) -> tuple[Path, bool]:
+    """Stripe's business_logo upload purpose caps at 512 KB. Many catalogue
+    JPEGs are 1-2 MB. Re-encode to a temp file ≤ max_bytes; return
+    (path, was_downscaled). Caller is responsible for deleting the temp
+    file after upload."""
+    if src.stat().st_size <= max_bytes:
+        return src, False
+    try:
+        from PIL import Image  # type: ignore
+    except ImportError:
+        sys.exit(
+            "✗ Pillow not installed (required to resize images >512 KB for Stripe).\n"
+            "   Install with:  pip3 install Pillow"
+        )
+
+    img = Image.open(src)
+    if img.mode in ("RGBA", "P", "LA"):
+        img = img.convert("RGB")
+
+    tmp = Path(tempfile.mkdtemp(prefix="editions-stripe-")) / f"{src.stem}.jpg"
+    max_side = 1800
+    quality = 88
+    last_size = -1
+    while True:
+        w, h = img.size
+        scale = min(max_side / max(w, h), 1.0)
+        if scale < 1.0:
+            resized = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+        else:
+            resized = img
+        resized.save(tmp, "JPEG", quality=quality, optimize=True, progressive=True)
+        size = tmp.stat().st_size
+        if size <= max_bytes:
+            return tmp, True
+        if size == last_size:  # not getting any smaller — give up gracefully
+            return tmp, True
+        last_size = size
+        # Step down: shrink dimensions first (more impact), then quality.
+        if max_side > 900:
+            max_side = int(max_side * 0.82)
+        else:
+            quality = max(quality - 6, 55)
+        if max_side < 600 and quality <= 55:
+            return tmp, True
+
+
 def stripe_upload_file(secret: str, file_path: Path) -> dict:
     """POST multipart/form-data to files.stripe.com to upload a local image.
     Returns the File object (dict with 'id'). Uses purpose=business_logo,
@@ -203,8 +279,19 @@ def ensure_image_url(secret: str, state: dict, img_rel: str) -> str | None:
         print(f"        ⚠ {img_rel} not found on disk — skipping image")
         return None
 
-    print(f"        uploading {img_rel} …")
-    f = stripe_upload_file(secret, path)
+    upload_path, downscaled = downscale_for_stripe(path)
+    note = (f" (downscaled {path.stat().st_size // 1024}"
+            f"→{upload_path.stat().st_size // 1024}KB)") if downscaled else ""
+    print(f"        uploading {img_rel}{note} …")
+    try:
+        f = stripe_upload_file(secret, upload_path)
+    finally:
+        if downscaled:
+            try:
+                upload_path.unlink()
+                upload_path.parent.rmdir()
+            except OSError:
+                pass
     link = stripe_post(secret, "file_links", {"file": f["id"]})
 
     entry = state.setdefault(img_rel, {})
