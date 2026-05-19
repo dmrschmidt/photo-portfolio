@@ -27,6 +27,9 @@ if [ -f package-lock.json ]; then npm ci --silent; else npm install --silent; fi
 log "building tailwind"
 npm run --silent build:css
 
+log "building photos (optimized JPEG + WebP into photos-web/)"
+python3 build_photos.py
+
 cat <<EOF
 
 setup complete.

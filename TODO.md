@@ -30,7 +30,7 @@ What remains is the compliance / premium punch list to take the site from
 ## 3. Premium — what paying buyers notice
 
 - [ ] **Schema.org JSON-LD** — `Product` per plate (price, availability, image), `Person` for the artist, `WebSite`. Drives rich results.
-- [ ] **Image pipeline** — generate AVIF/WebP responsive variants with `srcset`/`sizes`, `fetchpriority="high"` on the hero. Current full JPEGs are slow on mobile and anti-luxury. The Tailwind `aspect-[…]` classes already pin layout, so adding `width`/`height` attributes here would also eliminate the residual CLS.
+- [x] **Image pipeline** — `build_photos.py` emits an optimised progressive JPEG (q≈82) and a WebP (q≈80) for every photo, both capped at 1500 px on the long edge. `index.html` serves them via `<picture>` with `decoding="async"`, intrinsic `width`/`height` (CLS pinned), and `fetchpriority="high"` on the hero. The pre-commit hook keeps `photos-web/` in sync. Still open: an 800 w / 1500 w `srcset` so phones stop pulling the desktop size, and AVIF on top of WebP for the last ~25 %.
 - [ ] **Designed OG share card** — 1200×630 with the wordmark, not a reused photo.
 - [ ] **Certificate of authenticity sample** — image or PDF a buyer can see before committing €900.
 - [ ] **Press / collections / exhibitions** — institutional flourish elsewhere should be softened. If there is nothing real to credit yet, remove the language entirely.

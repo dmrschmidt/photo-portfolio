@@ -12,14 +12,22 @@ terms.html              — AGB / conditions of sale
 withdrawal.html         — Widerrufsbelehrung + Muster-Widerrufsformular
 shipping.html           — shipping & delivery
 privacy.html            — privacy policy
-photos/                 — plate masters (1500 px long edge)
+photos/                 — plate masters (1500 px long edge, source of truth)
+photos-web/             — built artifact: q=82 progressive JPEG + WebP
+                          variants of each photo, plus a manifest.json
+                          recording output dimensions. HTML references this
+                          folder via `<picture>`.
+photos-potential/       — archived photos not currently in the catalogue
 dennis.jpg              — atelier portrait
 input.css               — Tailwind source (@theme + custom CSS)
 styles.css              — built artifact, committed (do not edit by hand)
+build_photos.py         — rebuilds photos-web/ from photos/ (idempotent)
 stripe_sync.py          — pushes available plates to Stripe (Products →
                           Prices → Payment Links) and writes `data-stripe-url`
-                          back into `index.html`
-.githooks/pre-commit    — rebuilds styles.css when *.html or input.css change
+                          back into `index.html`. Downscales images >512 KB
+                          before upload (Stripe's business_logo cap).
+.githooks/pre-commit    — rebuilds styles.css when *.html or input.css change;
+                          rebuilds photos-web/ when any photo is staged
 setup.sh                — one-shot setup for a fresh clone
 package.json            — pins the Tailwind v4 CLI
 sitemap.xml
@@ -38,12 +46,18 @@ Run once after cloning:
 ```
 
 This installs the Tailwind v4 CLI into `node_modules/`, builds `styles.css`,
-and points git at `.githooks/`. From there on every `git commit` that touches
-an `*.html` file or `input.css` re-runs the build and stages `styles.css`
-into the same commit — so the artifact never drifts from its source.
+builds `photos-web/`, and points git at `.githooks/`. From there on every
+`git commit` the hook keeps both artifacts in sync with their sources:
+touching `*.html` / `input.css` rebuilds `styles.css`; touching any
+`photos/*.jp(e)g` rebuilds the matching pair in `photos-web/`.
 
-`styles.css` is committed on purpose: the deploy host serves the directory
-as-is, no build step at deploy time.
+`styles.css` and `photos-web/` are committed on purpose: the deploy host
+serves the directory as-is, no build step at deploy time.
+
+Photo build details: each source in `photos/` produces two outputs — an
+optimised progressive JPEG at q≈82 and a WebP at q≈80, both downscaled to
+max 1500 px on the long edge. `<picture>` elements in `index.html` serve
+the WebP to browsers that accept it and the JPEG to the rest.
 
 ## Stripe sync
 

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Rebuilds styles.css from input.css whenever any *.html or input.css is
-# part of the commit, then re-stages styles.css so the built artifact lands
-# in the same commit as its source. Non-matching commits are a no-op.
+# Keeps built artifacts in sync with their source on every commit:
+#   - styles.css ← input.css / *.html        (Tailwind build)
+#   - photos-web/* ← photos/*.{jpg,jpeg,JPG} (optimised JPEG + WebP)
+# Non-matching commits are a no-op per check.
 # Run ./setup.sh once after cloning to install deps and wire this hook up.
 # Bypass (use sparingly) with `git commit --no-verify`.
 set -euo pipefail
@@ -9,16 +10,21 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel)"
 staged=$(git diff --cached --name-only --diff-filter=ACMR)
 
-if ! printf '%s\n' "$staged" | grep -qE '\.html$|^input\.css$'; then
-  exit 0
+# Tailwind ────────────────────────────────────────────────────────────────
+if printf '%s\n' "$staged" | grep -qE '\.html$|^input\.css$'; then
+  bin="$repo_root/node_modules/.bin/tailwindcss"
+  if [ ! -x "$bin" ]; then
+    echo "pre-commit: $bin missing — run ./setup.sh first" >&2
+    exit 1
+  fi
+  echo "pre-commit: tailwind build"
+  (cd "$repo_root" && "$bin" -i input.css -o styles.css --minify)
+  git -C "$repo_root" add styles.css
 fi
 
-bin="$repo_root/node_modules/.bin/tailwindcss"
-if [ ! -x "$bin" ]; then
-  echo "pre-commit: $bin missing — run ./setup.sh first" >&2
-  exit 1
+# Photos ──────────────────────────────────────────────────────────────────
+if printf '%s\n' "$staged" | grep -qiE '^photos/[^/]+\.jpe?g$'; then
+  echo "pre-commit: build photos"
+  (cd "$repo_root" && python3 build_photos.py)
+  git -C "$repo_root" add photos-web
 fi
-
-echo "pre-commit: tailwind build"
-(cd "$repo_root" && "$bin" -i input.css -o styles.css --minify)
-git -C "$repo_root" add styles.css
