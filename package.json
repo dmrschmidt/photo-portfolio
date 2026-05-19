@@ -1,0 +1,13 @@
+{
+  "name": "schmidt-editions",
+  "private": true,
+  "description": "Static catalogue for Schmidt / Éditions. Tailwind is the only build step.",
+  "scripts": {
+    "build:css": "tailwindcss -i input.css -o styles.css --minify",
+    "watch:css": "tailwindcss -i input.css -o styles.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}

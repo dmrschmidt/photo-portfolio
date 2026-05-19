@@ -20,48 +20,7 @@
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 <link href="https://fonts.bunny.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-<style type="text/tailwindcss">
-  @theme {
-    --color-ink: #0b0b0a;
-    --color-ink-2: #121210;
-    --color-bone: #e8e2d3;
-    --color-bone-dim: #c8c2b3;
-    --color-mute: #7a746a;
-    --color-hair: #1e1d1b;
-    --color-rust: #c44a2f;
-    --font-display: "Fraunces", ui-serif, Georgia, serif;
-    --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  }
-  html, body { background: var(--color-ink); color: var(--color-bone); }
-  body {
-    font-family: var(--font-display);
-    font-feature-settings: "ss01", "ss02", "liga", "dlig";
-    -webkit-font-smoothing: antialiased;
-  }
-  .mono { font-family: var(--font-mono); letter-spacing: 0.02em; }
-  .display { font-family: var(--font-display); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; }
-  .display-wonk { font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 1; }
-  .hairline { border-color: var(--color-hair); }
-  .grain::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.05  0 0 0 0 0.05  0 0 0 0 0.04  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
-    mix-blend-mode: overlay; opacity: 0.35;
-  }
-  .rule { height: 1px; background: var(--color-hair); }
-  .vignette { background: radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(0,0,0,0.55) 100%); }
-
-  .drop-cap > p:first-of-type::first-letter {
-    font-family: var(--font-display);
-    font-size: 5rem;
-    float: left;
-    line-height: 0.85;
-    padding-right: 0.75rem;
-    padding-top: 0.25rem;
-    color: var(--color-bone);
-  }
-</style>
+<link rel="stylesheet" href="styles.css" />
 
 <style>
   html, body { background-color: #0b0b0a !important; }

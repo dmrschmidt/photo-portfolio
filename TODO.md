@@ -17,7 +17,7 @@ What remains is the compliance / premium punch list to take the site from
 - [x] **Widerrufsbelehrung + Muster-Widerrufsformular** — the formal cancellation notice text and the standard withdrawal form (HTML or PDF). Mentioning "14 days" is not enough under §312g BGB.
 - [x] **Shipping & delivery page** — lead times by region, carriers, insurance, customs handling for international buyers. Buyer must know shipping cost before clicking through to Stripe.
 - [x] **Privacy coverage** — site now serves its own `privacy.html`, naming Bunny Fonts, jsDelivr, and Stripe specifically. One placeholder remains: the hoster needs to be filled in under §4 once confirmed.
-- [ ] **Self-host Tailwind build** — replace the in-browser JIT script (loaded from US-based jsdelivr; leaks visitor IP each page view) with a minified static CSS file. Kills the third-country transfer, removes ~50 KB of runtime JS, and eliminates the brief FOUC on every load. Cheapest path: `npx @tailwindcss/cli -i input.css -o styles.css --minify`, commit `styles.css`, swap the `<script>` tag for a `<link rel="stylesheet">`. No Node runtime at deploy time — only at build.
+- [x] **Self-host Tailwind build** — Tailwind v4 CLI is pinned in `package.json`; `input.css` is the source, `styles.css` is the committed build artifact, and `.githooks/pre-commit` rebuilds it whenever a commit touches an `*.html` or `input.css`. `./setup.sh` wires this up on a fresh clone. Third-country transfer to jsDelivr is gone; FOUC is gone; deploy stays a pure static push.
 
 ## 2. Accessibility — BFSG (German Accessibility Act, in force since June 2025)
 

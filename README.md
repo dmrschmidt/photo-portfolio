@@ -6,19 +6,44 @@ Deployed at <https://editions.dmrschmidt.de/>.
 ## Layout
 
 ```
-index.html        — single-page catalogue (10 plates + atelier + enquire)
-journal.html      — studio notes
-photos/           — plate masters (1500 px long edge)
-dennis.jpg        — atelier portrait
-stripe_sync.py    — pushes available plates to Stripe (Products → Prices →
-                    Payment Links) and writes `data-stripe-url` back into
-                    `index.html`
+index.html              — single-page catalogue (10 plates + atelier + enquire)
+journal.html            — studio notes
+terms.html              — AGB / conditions of sale
+withdrawal.html         — Widerrufsbelehrung + Muster-Widerrufsformular
+shipping.html           — shipping & delivery
+privacy.html            — privacy policy
+photos/                 — plate masters (1500 px long edge)
+dennis.jpg              — atelier portrait
+input.css               — Tailwind source (@theme + custom CSS)
+styles.css              — built artifact, committed (do not edit by hand)
+stripe_sync.py          — pushes available plates to Stripe (Products →
+                          Prices → Payment Links) and writes `data-stripe-url`
+                          back into `index.html`
+.githooks/pre-commit    — rebuilds styles.css when *.html or input.css change
+setup.sh                — one-shot setup for a fresh clone
+package.json            — pins the Tailwind v4 CLI
 sitemap.xml
 robots.txt
 ```
 
 The catalogue is rendered entirely from `<article data-…>` attributes on each
 plate; everything else (modal, hero, marquee, atelier panel) is static markup.
+
+## Setup
+
+Run once after cloning:
+
+```sh
+./setup.sh
+```
+
+This installs the Tailwind v4 CLI into `node_modules/`, builds `styles.css`,
+and points git at `.githooks/`. From there on every `git commit` that touches
+an `*.html` file or `input.css` re-runs the build and stages `styles.css`
+into the same commit — so the artifact never drifts from its source.
+
+`styles.css` is committed on purpose: the deploy host serves the directory
+as-is, no build step at deploy time.
 
 ## Stripe sync
 
@@ -54,9 +79,9 @@ force a Stripe-side refresh of a description that hasn't been picked up
 ## Deployment
 
 The repo is pure-static — any host that serves the directory works (Netlify,
-Cloudflare Pages, GitHub Pages, S3+CloudFront, plain nginx). The only build
-step is the Stripe sync above; commit the resulting `index.html` and the
-static host will pick it up.
+Cloudflare Pages, GitHub Pages, S3+CloudFront, plain nginx). Both `styles.css`
+and any `data-stripe-url` attributes written by `stripe_sync.py` are committed,
+so the static host has nothing to build.
 
 ## Conventions
 
