@@ -127,6 +127,42 @@ DESCRIPTIONS = {
 }
 
 
+# Shipping rate attached to every payment link. Created once in the Stripe
+# dashboard; the same ID is used for both test and live ledgers. To swap
+# the rate (or update the country allow-list), change the constants below
+# and re-run — every existing payment link is deactivated and recreated on
+# the next sync, and the new URLs are written back into index.html.
+SHIPPING_RATE = "shr_1TYrViHnIwaKfOGFPX38u8GT"
+
+ALLOWED_COUNTRIES = [
+    # EU + EEA
+    "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",
+    "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MT", "NL", "NO",
+    "PL", "PT", "RO", "SE", "SI", "SK",
+    # UK + Switzerland
+    "CH", "GB",
+    # Americas
+    "AR", "BR", "CA", "CL", "CO", "MX", "PE", "US", "UY",
+    # Asia-Pacific
+    "AU", "HK", "ID", "IN", "JP", "KR", "MY", "NZ", "PH", "SG", "TH", "TW",
+    "VN",
+    # Middle East
+    "AE", "BH", "IL", "JO", "KW", "OM", "QA", "SA", "TR",
+    # Africa
+    "EG", "KE", "MA", "NG", "ZA",
+]
+
+
+def _payment_link_params(price_id: str) -> dict:
+    """Parameters for every payment_links create call — pinned to the shipping
+    rate and country allow-list above."""
+    return {
+        "line_items": [{"price": price_id, "quantity": 1}],
+        "shipping_options": [{"shipping_rate": SHIPPING_RATE}],
+        "shipping_address_collection": {"allowed_countries": ALLOWED_COUNTRIES},
+    }
+
+
 # ──────────────────────── .env + Stripe helpers ──────────────────────────────
 
 def load_env(path: Path) -> dict[str, str]:
@@ -424,9 +460,7 @@ def main() -> int:
                 "unit_amount": p["price_eur"] * 100,
                 "currency": "eur",
             })
-            link = stripe_post(secret, "payment_links", {
-                "line_items": [{"price": price["id"], "quantity": 1}],
-            })
+            link = stripe_post(secret, "payment_links", _payment_link_params(price["id"]))
             state[key] = {**existing,
                 "plate": p["plate"],
                 "title": p["title"],
@@ -436,6 +470,7 @@ def main() -> int:
                 "payment_link_id": link["id"],
                 "url": link["url"],
                 "status": "active",
+                "shipping_rate": SHIPPING_RATE,
             }
             save()
             print(f"        → {link['url']}")
@@ -456,39 +491,53 @@ def main() -> int:
             product_patch["images"] = [image_url]
         stripe_post(secret, f"products/{existing['product_id']}", product_patch)
 
-        # Price unchanged → nothing further to create.
-        if existing.get("price_eur") == p["price_eur"] and existing.get("status") == "active":
+        # Decide whether the payment link can be reused. It can iff the price
+        # is unchanged AND the link is still active AND the shipping rate
+        # already matches.
+        price_unchanged = existing.get("price_eur") == p["price_eur"]
+        status_active = existing.get("status") == "active"
+        shipping_ok = existing.get("shipping_rate") == SHIPPING_RATE
+
+        if price_unchanged and status_active and shipping_ok:
             print(f"  keep  {label} — {existing.get('url', '?')}")
             existing.update(title=p["title"])
             state[key] = existing
             save()
             continue
 
-        # Price changed (or plate is being re-opened) → rotate price + link.
-        if existing.get("price_eur") != p["price_eur"]:
+        # Something changed → rotate the payment link, and the price too if
+        # the EUR amount moved.
+        if not price_unchanged:
             print(f"  repr. {label} — €{existing.get('price_eur')} → €{p['price_eur']}")
+        elif not shipping_ok:
+            print(f"  ship  {label} — attaching shipping rate")
         else:
             print(f"  reopen {label}")
 
         if existing.get("payment_link_id"):
             stripe_post(secret, f"payment_links/{existing['payment_link_id']}", {"active": "false"})
-        if existing.get("price_id"):
-            stripe_post(secret, f"prices/{existing['price_id']}", {"active": "false"})
-        price = stripe_post(secret, "prices", {
-            "product": existing["product_id"],
-            "unit_amount": p["price_eur"] * 100,
-            "currency": "eur",
-        })
-        link = stripe_post(secret, "payment_links", {
-            "line_items": [{"price": price["id"], "quantity": 1}],
-        })
+
+        if not price_unchanged:
+            if existing.get("price_id"):
+                stripe_post(secret, f"prices/{existing['price_id']}", {"active": "false"})
+            price = stripe_post(secret, "prices", {
+                "product": existing["product_id"],
+                "unit_amount": p["price_eur"] * 100,
+                "currency": "eur",
+            })
+            price_id = price["id"]
+        else:
+            price_id = existing["price_id"]
+
+        link = stripe_post(secret, "payment_links", _payment_link_params(price_id))
         existing.update(
             title=p["title"],
             price_eur=p["price_eur"],
-            price_id=price["id"],
+            price_id=price_id,
             payment_link_id=link["id"],
             url=link["url"],
             status="active",
+            shipping_rate=SHIPPING_RATE,
         )
         state[key] = existing
         save()
