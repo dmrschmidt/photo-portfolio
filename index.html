@@ -6,10 +6,19 @@
 <meta name="theme-color" content="#0b0b0a" />
 <title>Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt</title>
 <meta name="description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
+<link rel="canonical" href="https://editions.dmrschmidt.de/" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt" />
+<meta property="og:description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
+<meta property="og:url" content="https://editions.dmrschmidt.de/" />
+<meta property="og:image" content="https://editions.dmrschmidt.de/photos/DSCF8869.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0a'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23c44a2f'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link href="https://fonts.bunny.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
@@ -431,11 +440,11 @@
     </div>
 
     <div class="col-span-12 md:col-span-5 md:col-start-8 space-y-8">
-      <a href="mailto:atelier@schmidt-editions.de?subject=Acquisition%20Enquiry"
+      <a href="mailto:contact@dmrschmidt.de?subject=Acquisition%20Enquiry"
          class="group block border hairline p-6 hover:bg-ink-2 transition">
         <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute">Write</div>
         <div class="display text-2xl md:text-3xl mt-2 group-hover:italic transition-all">
-          atelier@schmidt-editions.de <span class="caret"></span>
+          contact@dmrschmidt.de <span class="caret"></span>
         </div>
       </a>
 
@@ -455,7 +464,8 @@
         </summary>
         <div class="mt-5 text-bone-dim text-sm leading-relaxed space-y-3">
           <p>All works are delivered numbered, signed in graphite, and accompanied by a signed certificate of authenticity. Framing available on request at additional cost.</p>
-          <p>Prices listed in Euro, exclusive of VAT where applicable. International shipping insured and handled by specialist fine-art couriers. Once an edition is closed it is never reprinted or reissued.</p>
+          <p>Prices are quoted in Euro and include applicable VAT under the margin scheme for works of art (§25a UStG). Shipping is insured and handled by specialist fine-art couriers; carriage and duties are calculated at checkout and shown before payment.</p>
+          <p>Consumer buyers have a statutory right of withdrawal within fourteen days of delivery. To exercise it, write to <a href="mailto:contact@dmrschmidt.de" class="underline decoration-mute hover:text-bone">contact@dmrschmidt.de</a> with the plate and order reference. Once an edition is closed it is never reprinted or reissued.</p>
         </div>
       </details>
     </div>
@@ -468,13 +478,14 @@
     <div>
       <div class="display italic text-2xl">Schmidt <span class="text-mute">/</span> Éditions</div>
       <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute mt-2">
-        © MCMLXXXV — Dennis Schmidt. All impressions reserved.
+        editions.dmrschmidt.de · © MCMLXXXV — Dennis Schmidt. All impressions reserved.
       </div>
     </div>
-    <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute flex gap-6">
-      <a href="#" class="hover:text-bone">Instagram</a>
-      <a href="#" class="hover:text-bone">Journal</a>
-      <a href="#" class="hover:text-bone">Imprint</a>
+    <div class="mono text-[10px] uppercase tracking-[0.28em] text-mute flex flex-wrap gap-x-6 gap-y-2">
+      <a href="https://www.instagram.com/dmrschmidt/" target="_blank" rel="noopener" class="hover:text-bone">Instagram</a>
+      <a href="journal.html" class="hover:text-bone">Journal</a>
+      <a href="https://dmrschmidt.de/impressum" target="_blank" rel="noopener" class="hover:text-bone">Imprint</a>
+      <a href="https://dmrschmidt.de/datenschutz" target="_blank" rel="noopener" class="hover:text-bone">Privacy</a>
     </div>
   </div>
 </footer>
@@ -554,7 +565,7 @@
         mMail.rel = 'noopener';
         mMailLabel.textContent = 'Acquire';
       } else {
-        mMail.href = 'mailto:atelier@schmidt-editions.de?subject=' + encodeURIComponent('Enquiry — Pl. ' + d.plate + ' ' + d.title);
+        mMail.href = 'mailto:contact@dmrschmidt.de?subject=' + encodeURIComponent('Enquiry — Pl. ' + d.plate + ' ' + d.title);
         mMail.removeAttribute('target');
         mMail.removeAttribute('rel');
         mMailLabel.textContent = 'Enquire';

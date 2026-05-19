@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://editions.dmrschmidt.de/sitemap.xml
