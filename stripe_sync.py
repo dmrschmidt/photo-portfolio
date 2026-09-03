@@ -120,9 +120,20 @@ DESCRIPTIONS = {
     ),
     "photos/IMG_8674.JPG": (
         "Plate XIV · Sonnenseite. A figure passing between two cars, the "
-        "orange wall behind holding the last of the day. The closing plate of "
-        "the current cycle. Pigment giclée on Hahnemühle Photo Rag Baryta, "
-        "315 gsm. 53 × 70 cm. Edition of 7."
+        "orange wall behind holding the last of the day. Pigment giclée on "
+        "Hahnemühle Photo Rag Baryta, 315 gsm. 53 × 70 cm. Edition of 7."
+    ),
+    "photos/DSC09560.jpg": (
+        "Plate XV · Finsternis. València, the sun closed to a ring above a "
+        "row of upturned heads; a palm, a wire, a crowd gone silent in copper light. "
+        "Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. "
+        "70 × 47 cm. Edition of 7."
+    ),
+    "photos/DSC09593.jpg": (
+        "Plate XVI · Sichel. València, minutes later: a crescent sun caught on the "
+        "power lines, a man in a hat turning away from the spectacle. The "
+        "closing plate of the current cycle. Pigment giclée on Hahnemühle "
+        "Photo Rag Baryta, 315 gsm. 70 × 47 cm. Edition of 7."
     ),
 }
 

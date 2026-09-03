@@ -12,7 +12,7 @@
 <meta property="og:title" content="Schmidt / Éditions — Limited Photographic Prints by Dennis Schmidt" />
 <meta property="og:description" content="Strictly limited archival photographic editions by Dennis Schmidt. Hand-printed, numbered, signed. Berlin." />
 <meta property="og:url" content="https://editions.dmrschmidt.de/" />
-<meta property="og:image" content="https://editions.dmrschmidt.de/photos/R0001706.jpg" />
+<meta property="og:image" content="https://editions.dmrschmidt.de/photos-web/DSC09560.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0b0a'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23c44a2f'/%3E%3C/svg%3E" />
@@ -80,13 +80,19 @@
 </header>
 
 <!-- hero -->
-<section class="relative pt-40 md:pt-48 pb-24 md:pb-40 overflow-hidden">
+<section class="relative isolate min-h-[100svh] flex flex-col justify-end overflow-hidden pb-14 md:pb-20">
+  <picture class="absolute inset-0 -z-10">
+    <source srcset="photos-web/DSC09560.webp" type="image/webp" />
+    <img src="photos-web/DSC09560.jpg" alt="" width="1500" height="999" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-[36%_35%] md:object-[50%_35%] reveal" style="animation-delay:.1s" />
+  </picture>
+  <!-- scrim: dark at the bottom (behind the wordmark), open at the top (around the eclipse) -->
+  <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_top,var(--color-ink)_0%,color-mix(in_srgb,var(--color-ink)_78%,transparent)_38%,transparent_75%)]"></div>
   <div class="absolute inset-0 vignette pointer-events-none"></div>
 
   <div class="px-6 md:px-10 grid grid-cols-12 gap-6 md:gap-10 items-end relative">
-    <div class="col-span-12 md:col-span-8 reveal" style="animation-delay:.1s">
-      <div class="mono text-[10px] uppercase tracking-[0.34em] text-mute mb-6">
-        A photographic atelier · Editions I – XIV · MMXX – MMXXV
+    <div class="col-span-12 md:col-span-8 reveal" style="animation-delay:.3s">
+      <div class="mono text-[10px] uppercase tracking-[0.34em] text-bone-dim mb-6">
+        A photographic atelier · Editions I – XVI · MMXX – MMXXVI
       </div>
       <h1 class="display font-light leading-[0.86] tracking-[-0.02em]
                  text-[14vw] md:text-[11.5vw] lg:text-[10.2vw]">
@@ -96,22 +102,13 @@
         </span>
       </h1>
     </div>
-
-    <div class="col-span-12 md:col-span-4 reveal" style="animation-delay:.5s">
-      <figure class="img-frame aspect-[3/4] w-full">
-        <picture>
-          <source srcset="photos-web/R0001706.webp" type="image/webp" />
-          <img src="photos-web/R0001706.jpg" alt="" width="1125" height="1500" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover" />
-        </picture>
-      </figure>
-      <figcaption class="mono text-[10px] uppercase tracking-[0.28em] text-mute mt-3 flex justify-between">
-        <span>Pl. X — <em class="not-italic text-bone-dim">Hinter Glas</em></span>
-        <span>Pigment Giclée · Berlin</span>
-      </figcaption>
-    </div>
+    <p class="col-span-12 md:col-span-4 mono text-[10px] uppercase tracking-[0.28em] text-bone-dim flex md:flex-col md:items-end gap-x-6 gap-y-1 justify-between reveal" style="animation-delay:.6s">
+      <span>Pl. XV — <em class="not-italic text-bone">Finsternis</em></span>
+      <span class="text-mute">Pigment Giclée · València</span>
+    </p>
   </div>
 
-  <div class="px-6 md:px-10 mt-16 md:mt-24 grid grid-cols-12 gap-6 md:gap-10 relative">
+  <div class="px-6 md:px-10 mt-14 md:mt-20 grid grid-cols-12 gap-6 md:gap-10 relative">
     <p class="col-span-12 md:col-span-6 md:col-start-6 display italic text-[1.5rem] md:text-[2rem] leading-[1.2] text-bone-dim reveal" style="animation-delay:.9s">
       &ldquo;Each photograph arrives the way a memory arrives —
       uninvited, unfinished, and already beginning to fade.&rdquo;
@@ -143,7 +140,7 @@
     <div>
       <div class="mono text-[10px] uppercase tracking-[0.34em] text-mute mb-4">§ I — The Edition</div>
       <h2 class="display text-5xl md:text-7xl font-light leading-[0.95] tracking-[-0.02em]">
-        Fourteen works.<br/>
+        Sixteen works.<br/>
         <span class="italic display-wonk text-bone-dim">Nothing further.</span>
       </h2>
     </div>
@@ -426,8 +423,8 @@
       </div>
     </article>
 
-    <!-- 14 last one -->
-    <article class="col-span-12 md:col-span-5 md:col-start-7 lift" data-plate="XIV" data-title="Sonnenseite" data-img="photos/IMG_8674.JPG" data-year="2025" data-edition="7" data-remaining="4" data-price="380" data-desc="Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. 53 × 70 cm. A figure passing between two cars, the orange wall behind holding the last of the day. The closing plate of the current cycle. Edition of 7." data-stripe-url="https://buy.stripe.com/cNi7sLczp4y18LO5Ho4AU1a">
+    <!-- 14 -->
+    <article class="col-span-12 md:col-span-5 md:col-start-7 lift" data-plate="XIV" data-title="Sonnenseite" data-img="photos/IMG_8674.JPG" data-year="2025" data-edition="7" data-remaining="4" data-price="380" data-desc="Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. 53 × 70 cm. A figure passing between two cars, the orange wall behind holding the last of the day. Edition of 7." data-stripe-url="https://buy.stripe.com/cNi7sLczp4y18LO5Ho4AU1a">
       <figure class="img-frame aspect-[3/4] w-full">
         <picture>
           <source srcset="photos-web/IMG_8674.webp" type="image/webp" />
@@ -442,6 +439,48 @@
         <div class="text-right mono text-[11px] uppercase tracking-[0.18em]">
           <div><span class="dot dot-available mr-2 align-middle"></span>4 of 7 remain</div>
           <div class="text-bone mt-1">€ 380</div>
+          <div class="mono text-[9px] tracking-[0.18em] text-mute normal-case mt-1">incl. VAT · shipping at checkout</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 15 -->
+    <article class="col-span-12 md:col-span-7 lift" data-plate="XV" data-title="Finsternis" data-img="photos/DSC09560.jpg" data-year="2026" data-edition="7" data-remaining="7" data-price="480" data-desc="Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. 70 × 47 cm. València, the sun closed to a ring above a row of upturned heads; a palm, a wire, a crowd gone silent in copper light. Hand-numbered, signed in graphite, shipped flat with a letterpress certificate of authenticity. Edition of 7." data-stripe-url="https://buy.stripe.com/dRm7sL0QHe8BgegedU4AU1Y">
+      <figure class="img-frame aspect-[3/2] w-full">
+        <picture>
+          <source srcset="photos-web/DSC09560.webp" type="image/webp" />
+          <img src="photos-web/DSC09560.jpg" alt="Finsternis" width="1500" height="999" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+        </picture>
+      </figure>
+      <div class="mt-5 flex items-start justify-between gap-6">
+        <div>
+          <div class="mono text-[10px] uppercase tracking-[0.3em] text-mute">Pl. XV · MMXXVI</div>
+          <h3 class="display text-2xl md:text-3xl italic mt-1">Finsternis</h3>
+        </div>
+        <div class="text-right mono text-[11px] uppercase tracking-[0.18em]">
+          <div><span class="dot dot-available mr-2 align-middle"></span>7 of 7 remain</div>
+          <div class="text-bone mt-1">€ 480</div>
+          <div class="mono text-[9px] tracking-[0.18em] text-mute normal-case mt-1">incl. VAT · shipping at checkout</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 16 last one -->
+    <article class="col-span-12 md:col-span-5 lift" data-plate="XVI" data-title="Sichel" data-img="photos/DSC09593.jpg" data-year="2026" data-edition="7" data-remaining="7" data-price="420" data-desc="Pigment giclée on Hahnemühle Photo Rag Baryta, 315 gsm. 70 × 47 cm. València, minutes later: a crescent sun caught on the power lines, a man in a hat turning away from the spectacle. The closing plate of the current cycle. Edition of 7." data-stripe-url="https://buy.stripe.com/28EfZh0QHe8B9PS2vc4AU1Z">
+      <figure class="img-frame aspect-[3/2] w-full">
+        <picture>
+          <source srcset="photos-web/DSC09593.webp" type="image/webp" />
+          <img src="photos-web/DSC09593.jpg" alt="Sichel" width="1500" height="999" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+        </picture>
+      </figure>
+      <div class="mt-5 flex items-start justify-between gap-6">
+        <div>
+          <div class="mono text-[10px] uppercase tracking-[0.3em] text-mute">Pl. XVI · MMXXVI</div>
+          <h3 class="display text-2xl md:text-3xl italic mt-1">Sichel</h3>
+        </div>
+        <div class="text-right mono text-[11px] uppercase tracking-[0.18em]">
+          <div><span class="dot dot-available mr-2 align-middle"></span>7 of 7 remain</div>
+          <div class="text-bone mt-1">€ 420</div>
           <div class="mono text-[9px] tracking-[0.18em] text-mute normal-case mt-1">incl. VAT · shipping at checkout</div>
         </div>
       </div>
